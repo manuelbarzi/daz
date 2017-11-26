@@ -56,7 +56,7 @@ function _find(args, terminal) {
 
     const matches = []
 
-    _search(_basePath, _path, what, options)
+    _search(_basePath, _path, what, options, terminal)
 }
 
 function _trim(text) {
@@ -75,7 +75,7 @@ Array.prototype.contains = function (array) {
     return true
 }
 
-function _search(_basePath, _path, what, options) {
+function _search(_basePath, _path, what, options, terminal) {
     const files = fs.readdirSync(_path)
 
     files.forEach(file => {
@@ -114,7 +114,7 @@ function _search(_basePath, _path, what, options) {
                 terminal.log(out)
             }
         } else if (lstat.isDirectory() && (!options.exclude || !options.exclude.includes(file))) {
-            _search(_basePath, _file, what, options)
+            _search(_basePath, _file, what, options, terminal)
         }
     })
 }

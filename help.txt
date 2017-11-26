@@ -1,7 +1,3 @@
-# daz
-
-```bash
-$ daz --help
 'Daz' allows you to catalog your folders by title and tags and search them in a simple way
 usage:
    daz [--version] [--help]
@@ -21,4 +17,3 @@ examples:
    $ daz get ..
    $ daz find "Hello, World!" --ignore-case --show-path --show-tags
    $ daz find "" --tags=helloworld --path=.. --show-json
-```

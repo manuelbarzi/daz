@@ -1,4 +1,12 @@
-# daz
+# Daz
+
+## Installation
+
+```bash
+$ npm i -g daz
+```
+
+## Usage
 
 ```bash
 $ daz --help

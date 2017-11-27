@@ -1,6 +1,6 @@
 {
   "name": "daz",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "Daz allows you to catalog your folders by title and tags and search them in a simple way",
   "bin": {
     "daz": "index.js"

@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('./daz')(process.argv, process.stdin, process.stdout, console)
+new (require('./DazCli'))(process.stdin, process.stdout, console).run(process.argv)

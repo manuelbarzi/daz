@@ -1,10 +1,8 @@
 const fs = require('fs')
 const path = require('path')
 
-function _set(args, input, output, terminal) {
-    const target = args[0]
-
-    const _path = target ? path.resolve(target) : process.cwd()
+function set(path_, input, output, terminal) {
+    const _path = path_ ? path.resolve(path_) : process.cwd()
 
     if (!fs.existsSync(_path)) throw new Error(`folder does not exist ${_path}`)
     if (fs.lstatSync(_path).isFile()) throw new Error(`${_path} is not a folder`)
@@ -57,4 +55,4 @@ function _pretty(json) {
     return JSON.stringify(json, null, 2)
 }
 
-module.exports = _set
+module.exports = set

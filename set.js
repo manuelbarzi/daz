@@ -1,14 +1,14 @@
 const fs = require('fs')
 const path = require('path')
 
-function set(path_, input, output, terminal) {
-    const _path = path_ ? path.resolve(path_) : process.cwd()
+function set(basePath, input, output, terminal) {
+    const _basePath = basePath ? path.resolve(basePath) : process.cwd()
 
-    if (!fs.existsSync(_path)) throw new Error(`folder does not exist ${_path}`)
-    if (fs.lstatSync(_path).isFile()) throw new Error(`${_path} is not a folder`)
+    if (!fs.existsSync(_basePath)) throw new Error(`folder does not exist ${_basePath}`)
+    if (fs.lstatSync(_basePath).isFile()) throw new Error(`${_basePath} is not a folder`)
 
-    const folder = path.basename(_path)
-    const file = path.join(_path, '.this')
+    const folder = path.basename(_basePath)
+    const file = path.join(_basePath, '.this')
 
     let info = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf-8')) : { title: folder }
 

@@ -1,5 +1,4 @@
 const Daz = require('./Daz')
-const path = require('path')
 
 class DazCli extends Daz {
     constructor(input, output, terminal) {

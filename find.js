@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path')
 
 function find(what, options, terminal, basePath) {
-    const _basePath =  options.path ? path.resolve(options.path) : path.resolve('.')
+    const _basePath =  options.path ? path.resolve(options.path) : process.cwd()
 
     const targetPath = basePath ? basePath : _basePath
 

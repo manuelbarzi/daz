@@ -1,5 +1,8 @@
 const Daz = require('./Daz')
 
+const fs = require('fs')
+const path = require('path')
+
 class DazCli extends Daz {
     constructor(input, output, terminal) {
         super(input, output, terminal)
@@ -10,9 +13,9 @@ class DazCli extends Daz {
             const command = args[2]
     
             if (command === '--help') {
-                this.output.write(`${fs.readFileSync('./help.txt')}\n`)
+                this.output.write(`${fs.readFileSync(path.join(__dirname, 'help.txt'))}\n`)
             } else if (command === '--version') {
-                this.terminal.log(require('./package.json').version)
+                this.terminal.log(require(path.join(__dirname, '../package.json')).version)
             } else if (command === 'set') {
                 this.set(args.slice(3))
             } else if (command === 'get') {

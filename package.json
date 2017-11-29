@@ -1,9 +1,9 @@
 {
   "name": "daz",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "Daz allows you to catalog your folders by title and tags and search them in a simple way",
   "bin": {
-    "daz": "index.js"
+    "daz": "src/index.js"
   },
   "keywords": [
     "daz",
@@ -26,5 +26,11 @@
     "type": "git",
     "url": "https://github.com/1nside0ut/daz"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-exec": "^3.0.0"
+  }
 }

@@ -31,7 +31,7 @@ function find(what, options, terminal, basePath) {
                 let out = ''
 
                 if (!options.hidePath) {
-                    out += options.showFullPath? `${targetPath} -> ` : `${path.relative(_basePath, targetPath)} -> `
+                    out += options.showFullPath? `${targetPath} -> ` : `${options.path? options.path : './'}${path.relative(_basePath, targetPath)} -> `
                 }
 
                 if (options.showJson) {

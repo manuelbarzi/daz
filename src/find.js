@@ -19,6 +19,9 @@ function find(what, options, terminal, basePath) {
 
             let matches = options.ignoreCase ? info.title.toLowerCase().includes(what.toLowerCase()) : info.title.includes(what)
 
+            if (!options.excludeDescription && info.description) 
+                matches |= options.ignoreCase ? info.description.toLowerCase().includes(what.toLowerCase()) : info.description.includes(what)
+
             if (options.tags) {
                 if (!info.tags) {
                     matches &= false
@@ -28,7 +31,7 @@ function find(what, options, terminal, basePath) {
             }
 
             if (matches) {
-                let out = ''
+                let out = options.lineBreak? '\n' : ''
 
                 if (!options.hidePath) {
                     out += options.showFullPath? `${targetPath} -> ` : `${options.path? options.path : './'}${path.relative(_basePath, targetPath)} -> `
@@ -39,7 +42,9 @@ function find(what, options, terminal, basePath) {
                 } else {
                     out += `${info.title}`
 
-                    if (options.showTags) out += ` [${info.tags || ''}]`
+                    if (!options.hideDescription) out += info.description? ` [${info.description}]` : ' <[NO DESCRIPTION]>'
+
+                    if (options.showTags) out += info.tags? ` [${info.tags}]` : ' <[NO TAGS]>'
                 }
 
 

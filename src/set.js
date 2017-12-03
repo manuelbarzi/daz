@@ -10,7 +10,7 @@ function set(basePath, input, output, terminal) {
     const folder = path.basename(_basePath)
     const file = path.join(_basePath, '.this')
 
-    let info = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf-8')) : { title: folder }
+    const info = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf-8')) : { title: folder }
 
     let step = 1
 
@@ -25,26 +25,40 @@ function set(basePath, input, output, terminal) {
             case 1:
                 if (text) info.title = text
 
-                output.write(info.tags ? `tags [${info.tags}] (comma or space separated): ` : 'tags (comma or space separated): ')
+                output.write(info.description ? `description [${info.description}]: ` : 'description: ')
 
                 break
             case 2:
+                if (text) info.description = text
+
+                output.write(info.tags ? `tags [${info.tags}] (comma or space separated): ` : 'tags (comma or space separated): ')
+
+                break
+            case 3:
                 if (text) info.tags = text.replace(/,/g, ' ').replace(/\s+/g, ' ').split(' ').filter(item => !!item.trim())
         }
 
         step++
 
-        if (step > 2) {
+        if (step > 3) {
             if (!info.created)
                 info.created = new Date()
             else
                 info.modified = new Date()
 
-            info = _pretty(info)
+            let _info = {}
 
-            fs.writeFileSync(file, info)
+            if (info.title) _info.title = info.title
+            if (info.description) _info.description = info.description
+            if (info.tags) _info.tags = info.tags
+            if (info.created) _info.created = info.created
+            if (info.modified) _info.modified = info.modified
 
-            terminal.log(`written file ${file} -> ${info}`)
+            _info = _pretty(_info)
+
+            fs.writeFileSync(file, _info)
+
+            terminal.log(`written file ${file} -> ${_info}`)
 
             process.exit()
         }

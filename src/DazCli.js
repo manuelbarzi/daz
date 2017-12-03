@@ -58,7 +58,11 @@ class DazCli extends Daz {
     
             if (option === '--ignore-case') {
                 options.ignoreCase = true
-            } else if (option.startsWith('--tags')) {
+            } else if (option === '--exclude-description') {
+                options.excludeDescription = true
+            } else if (option === '--hide-description') {
+                options.hideDescription = true
+            } else if (option.startsWith('--tags=')) {
                 const length = '--tags'.length
                 const key = option.substring(0, length)
                 const symbol = option.substring(length, length + 1)
@@ -67,7 +71,9 @@ class DazCli extends Daz {
                 if (key !== '--tags' || symbol !== '=' || !_trim(value)) throw new Error('invalid option for --tags')
     
                 options.tags = _split(value)
-            } else if (option.startsWith('--exclude')) {
+            } else if (option === '--show-tags') {
+                options.showTags = true
+            } else if (option.startsWith('--exclude=')) {
                 const length = '--exclude'.length
                 const key = option.substring(0, length)
                 const symbol = option.substring(length, length + 1)
@@ -76,7 +82,7 @@ class DazCli extends Daz {
                 if (key !== '--exclude' || symbol !== '=' || !_trim(value)) throw new Error('invalid option for --exclude')
     
                 options.exclude = _split(value)
-            } else if (option.startsWith('--path')) {
+            } else if (option.startsWith('--path=')) {
                 const length = '--path'.length
                 const key = option.substring(0, length)
                 const symbol = option.substring(length, length + 1)
@@ -89,11 +95,11 @@ class DazCli extends Daz {
                 options.showFullPath = true
             } else if (option === '--hide-path') {
                 options.hidePath = true
-            } else if (option === '--show-tags') {
-                options.showTags = true
             } else if (option === '--show-json') {
                 options.showJson = true
-            } else throw new Error(`invalid option ${option}`)
+            } else if (option === '--line-break') {
+                options.lineBreak = true
+            }
         }
     
         super.find(what, options)

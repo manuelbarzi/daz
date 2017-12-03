@@ -1,5 +1,6 @@
 {
   "title": "Daz allows you to catalog your folders by title and tags and search them in a simple way",
+  "description": "Command-line tool for searching folders described by a .this file.",
   "tags": [
     "daz",
     "folder",
@@ -14,5 +15,6 @@
     "tags",
     "title"
   ],
-  "created": "2017-11-29T00:32:09.203Z"
+  "created": "2017-11-29T00:32:09.203Z",
+  "modified": "2017-12-03T00:15:24.596Z"
 }

@@ -1,24 +1,40 @@
-Daz allows you to catalog your folders by title, description, and tags, and search them in a simple way
+Daz allows you to catalog your folders by title, description, and tags, and search them in a simple way (it can also search in package.json files to match npm modules)
 
 usage:
 
     daz [--version] [--help]
-    daz <set | get> <path> => sets or gets folder information at the given path (title and tags)
+
+    daz set <path> => sets folder information at the given path (.this json file with title, description and tags)
+
+    daz get <path> => gets folder information at the given path (.this json file with title, description and tags)
+
     daz find <text-in-title-or-description> [options] => finds folders based on text matching in title or description, and options
 
 options:
 
     --ignore-case => ignores case in text matching
+
     --exclude-description => excludes description from search of folders (searches only by title)
+
     --hide-description => hides the description associated to each folder matched
+
     --tags=<tags> => filter matching folders by tags (comma-separated)
+
     --show-tags => shows the tags associated to each folder matched output
-    --exclude=<folders> => excludes searching in given folders (comma-separated)
+
+    --exclude-paths=<[paths]> => excludes searching in given folders (comma-separated)
+
     --path=<path> => peforms the search from specific path instead of current path (default)
+
     --hide-path => hides the path of each folder matched
+
     --show-full-path => shows the full path of each folder matched
+
     --show-json => shows the information associated to each folder matched in json format (excludes other --show-*/--hide-* options)
+
     --line-break => adds a line-break before each folder (helps viewing the results)
+
+    --include-package-json => includes searching in package.json files (name and description text matching, and keywords as tags)
 
 example:
 

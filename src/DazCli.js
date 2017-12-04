@@ -73,15 +73,15 @@ class DazCli extends Daz {
                 options.tags = _split(value)
             } else if (option === '--show-tags') {
                 options.showTags = true
-            } else if (option.startsWith('--exclude=')) {
-                const length = '--exclude'.length
+            } else if (option.startsWith('--exclude-paths=')) {
+                const length = '--exclude-paths'.length
                 const key = option.substring(0, length)
                 const symbol = option.substring(length, length + 1)
                 const value = option.substring(length + 1)
     
-                if (key !== '--exclude' || symbol !== '=' || !_trim(value)) throw new Error('invalid option for --exclude')
+                if (key !== '--exclude-paths' || symbol !== '=' || !_trim(value)) throw new Error('invalid option for --exclude-paths')
     
-                options.exclude = _split(value)
+                options.excludePaths = _split(value)
             } else if (option.startsWith('--path=')) {
                 const length = '--path'.length
                 const key = option.substring(0, length)
@@ -99,6 +99,8 @@ class DazCli extends Daz {
                 options.showJson = true
             } else if (option === '--line-break') {
                 options.lineBreak = true
+            } else if (option === '--include-package-json') {
+                options.includePackageJson = true
             }
         }
     

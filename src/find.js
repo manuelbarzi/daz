@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path')
 
 function find(what, options, terminal, basePath) {
-    const _basePath =  options.path ? path.resolve(options.path) : process.cwd()
+    const _basePath = options.path ? path.resolve(options.path) : process.cwd()
 
     const targetPath = basePath ? basePath : _basePath
 
@@ -14,46 +14,90 @@ function find(what, options, terminal, basePath) {
         const subPathFull = path.join(targetPath, subPath)
         const lstat = fs.lstatSync(subPathFull)
 
-        if (lstat.isFile() && subPath === '.this') {
-            const info = JSON.parse(fs.readFileSync(subPathFull, 'utf-8'))
+        if (lstat.isFile()) {
+            if (subPath === '.this') {
+                const info = JSON.parse(fs.readFileSync(subPathFull, 'utf-8'))
 
-            let matches = options.ignoreCase ? info.title.toLowerCase().includes(what.toLowerCase()) : info.title.includes(what)
+                let matches = matchesText(info.title, what, options.ignoreCase)
 
-            if (!options.excludeDescription && info.description) 
-                matches |= options.ignoreCase ? info.description.toLowerCase().includes(what.toLowerCase()) : info.description.includes(what)
+                if (!options.excludeDescription)
+                    matches |= matchesText(info.description, what, options.ignoreCase)
 
-            if (options.tags) {
-                if (!info.tags) {
-                    matches &= false
-                } else {
-                    matches &= info.tags.contains(options.tags)
+                if (options.tags) {
+                    if (!info.tags) {
+                        matches &= false
+                    } else {
+                        matches &= info.tags.contains(options.tags)
+                    }
+                }
+
+                if (matches) {
+                    let out = options.lineBreak ? '\n' : ''
+
+                    if (!options.hidePath) {
+                        out += options.showFullPath ? `${targetPath} -> ` : `${options.path ? options.path : './'}${path.relative(_basePath, targetPath)} -> `
+                    }
+
+                    if (options.showJson) {
+                        out += JSON.stringify(info)
+                    } else {
+                        out += `${info.title}`
+
+                        if (!options.hideDescription) out += info.description ? ` [${info.description}]` : ' <[NO DESCRIPTION]>'
+
+                        if (options.showTags) out += info.tags ? ` [${info.tags}]` : ' <[NO TAGS]>'
+                    }
+
+
+                    terminal.log(out)
+                }
+            } else if (options.includePackageJson && subPath === 'package.json') {
+                const info = JSON.parse(fs.readFileSync(subPathFull, 'utf-8'))
+
+                let matches = matchesText(info.name, what, options.ignoreCase)
+
+                if (!options.excludeDescription && info.description)
+                    matches |= matchesText(info.description, what, options.ignoreCase)
+
+                if (options.tags) {
+                    if (!info.keywords) {
+                        matches &= false
+                    } else {
+                        matches &= info.keywords.contains(options.tags)
+                    }
+                }
+
+                if (matches) {
+                    let out = options.lineBreak ? '\n' : ''
+
+                    if (!options.hidePath) {
+                        out += options.showFullPath ? `${targetPath} -> ` : `${options.path ? options.path : './'}${path.relative(_basePath, targetPath)} -> `
+                    }
+
+                    if (options.showJson) {
+                        out += JSON.stringify(info)
+                    } else {
+                        out += `${info.name}`
+
+                        if (!options.hideDescription) out += info.description ? ` [${info.description}]` : ' <[NO DESCRIPTION]>'
+
+                        if (options.showTags) out += info.keywords ? ` [${info.keywords}]` : ' <[NO TAGS]>'
+                    }
+
+
+                    terminal.log(out)
                 }
             }
-
-            if (matches) {
-                let out = options.lineBreak? '\n' : ''
-
-                if (!options.hidePath) {
-                    out += options.showFullPath? `${targetPath} -> ` : `${options.path? options.path : './'}${path.relative(_basePath, targetPath)} -> `
-                }
-
-                if (options.showJson) {
-                    out += JSON.stringify(info)
-                } else {
-                    out += `${info.title}`
-
-                    if (!options.hideDescription) out += info.description? ` [${info.description}]` : ' <[NO DESCRIPTION]>'
-
-                    if (options.showTags) out += info.tags? ` [${info.tags}]` : ' <[NO TAGS]>'
-                }
-
-
-                terminal.log(out)
-            }
-        } else if (lstat.isDirectory() && (!options.exclude || !options.exclude.includes(subPath))) {
+        } else if (lstat.isDirectory() && (!options.excludePaths || !options.excludePaths.includes(subPath))) {
             find(what, options, terminal, subPathFull)
         }
     })
+}
+
+function matchesText(text, what, ignoreCase) {
+    if (!text || !what) return false
+
+    return ignoreCase? text.toLowerCase().includes(what.toLowerCase()) : text.includes(what)
 }
 
 module.exports = find

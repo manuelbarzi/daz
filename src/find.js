@@ -43,9 +43,9 @@ function find(what, options, terminal, basePath) {
                     } else {
                         out += `${info.title}`
 
-                        if (!options.hideDescription) out += info.description ? ` [${info.description}]` : ' <[NO DESCRIPTION]>'
+                        if (!options.hideDescription) out += info.description ? ` [${info.description}]` : ' [NO DESCRIPTION]'
 
-                        if (options.showTags) out += info.tags ? ` [${info.tags}]` : ' <[NO TAGS]>'
+                        if (options.showTags) out += info.tags ? ` [${info.tags}]` : ' [NO TAGS]'
                     }
 
 
@@ -79,9 +79,9 @@ function find(what, options, terminal, basePath) {
                     } else {
                         out += `${info.name}`
 
-                        if (!options.hideDescription) out += info.description ? ` [${info.description}]` : ' <[NO DESCRIPTION]>'
+                        if (!options.hideDescription) out += info.description ? ` [${info.description}]` : ' [NO DESCRIPTION]'
 
-                        if (options.showTags) out += info.keywords ? ` [${info.keywords}]` : ' <[NO TAGS]>'
+                        if (options.showTags) out += info.keywords ? ` [${info.keywords}]` : ' [NO TAGS]'
                     }
 
 
@@ -95,7 +95,7 @@ function find(what, options, terminal, basePath) {
 }
 
 function matchesText(text, what, ignoreCase) {
-    if (!text || !what) return false
+    if (!text) return false
 
     return ignoreCase? text.toLowerCase().includes(what.toLowerCase()) : text.includes(what)
 }

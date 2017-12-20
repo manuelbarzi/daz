@@ -18,10 +18,10 @@ function find(what, options, terminal, basePath) {
             if (subPath === '.this') {
                 const info = JSON.parse(fs.readFileSync(subPathFull, 'utf-8'))
 
-                let matches = matchesText(info.title, what, options.ignoreCase)
+                let matches = matchesText(info.title, what, options.caseSensitive)
 
                 if (!options.excludeDescription)
-                    matches |= matchesText(info.description, what, options.ignoreCase)
+                    matches |= matchesText(info.description, what, options.caseSensitive)
 
                 if (options.tags) {
                     if (!info.tags) {
@@ -54,10 +54,10 @@ function find(what, options, terminal, basePath) {
             } else if (options.includePackageJson && subPath === 'package.json') {
                 const info = JSON.parse(fs.readFileSync(subPathFull, 'utf-8'))
 
-                let matches = matchesText(info.name, what, options.ignoreCase)
+                let matches = matchesText(info.name, what, options.caseSensitive)
 
                 if (!options.excludeDescription && info.description)
-                    matches |= matchesText(info.description, what, options.ignoreCase)
+                    matches |= matchesText(info.description, what, options.caseSensitive)
 
                 if (options.tags) {
                     if (!info.keywords) {
@@ -94,10 +94,10 @@ function find(what, options, terminal, basePath) {
     })
 }
 
-function matchesText(text, what, ignoreCase) {
+function matchesText(text, what, caseSensitive) {
     if (!text) return false
 
-    return ignoreCase? text.toLowerCase().includes(what.toLowerCase()) : text.includes(what)
+    return caseSensitive? text.includes(what) : text.toLowerCase().includes(what.toLowerCase())
 }
 
 module.exports = find

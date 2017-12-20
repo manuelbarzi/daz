@@ -12,7 +12,7 @@ usage:
 
 options:
 
-    --ignore-case => ignores case in text matching
+    --case-sensitive => matches text in case sensitive mode
 
     --exclude-description => excludes description from search of folders (searches only by title)
 
@@ -58,9 +58,9 @@ example:
 
     // use daz to find the content
 
-    // by text in title (ignoring case)
+    // by text in title
 
-    $ daz find calculator --ignore-case
+    $ daz find calculator
 
     my-folder/projects/scientific-calculator -> Scientific Calculator for iOS and Android
 

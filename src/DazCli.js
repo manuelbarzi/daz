@@ -56,8 +56,8 @@ class DazCli extends Daz {
         for (let i = 0; i < optionArgs.length; i++) {
             const option = optionArgs[i]
     
-            if (option === '--ignore-case') {
-                options.ignoreCase = true
+            if (option === '--case-sensitive') {
+                options.caseSensitive = true
             } else if (option === '--exclude-description') {
                 options.excludeDescription = true
             } else if (option === '--hide-description') {

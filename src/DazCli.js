@@ -14,9 +14,9 @@ class DazCli extends Daz {
             const command = args[2]
 
             if (command === '--help') {
-                exec(`sh ${__dirname}/help.sh`,
+                exec(`sh ${path.join(__dirname, 'help.sh')}`,
                     (err, stdout, stderr) =>
-                    err ? this.output.write(`${fs.readFileSync(path.join(__dirname, 'help.txt'))}\n`) : console.log(`${stdout}`)
+                    err ? this.output.write(`${fs.readFileSync(path.join(__dirname, 'help.txt'))}\n`) : this.output.write(`${stdout}`)
                 )
             } else if (command === '--version') {
                 this.terminal.log(require(path.join(__dirname, '../package.json')).version)

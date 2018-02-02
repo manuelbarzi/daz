@@ -3,6 +3,9 @@ const Daz = require('./Daz')
 const fs = require('fs')
 const path = require('path')
 const exec = require('child_process').exec
+const helperText = require('./help')
+
+
 
 class DazCli extends Daz {
     constructor(input, output, terminal) {
@@ -14,10 +17,7 @@ class DazCli extends Daz {
             const command = args[2]
 
             if (command === '--help') {
-                exec(`sh ${path.join(__dirname, 'help.sh')}`,
-                    (err, stdout, stderr) =>
-                    err ? this.output.write(`${fs.readFileSync(path.join(__dirname, 'help.txt'))}\n`) : this.terminal.log(`${stdout}`)
-                )
+                this.terminal.log(helperText())
             } else if (command === '--version') {
                 this.terminal.log(require(path.join(__dirname, '../package.json')).version)
             } else if (command === 'set') {

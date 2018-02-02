@@ -26,7 +26,7 @@ module.exports = function helpText() {
  
  ${color.Color_Off}Daz allows you to catalog your folders by title, description, and tags, and search them in a simple way (it can also search in package.json files to match npm modules)
  
- ${color.Yellow}Usage:
+ ${color.Yellow}${color.Bold}Usage:${color.Color_Off}
  
      ${color.Red}daz ${color.Green}[--version] [--help]
  
@@ -36,7 +36,7 @@ module.exports = function helpText() {
  
      ${color.Red}daz find ${color.Green}<text-in-title-or-description> ${color.Purple}[options] ${color.White}${color.Comentary}//finds folders based on text matching in title or description, and options${color.Color_Off}
  
- ${color.Yellow}Options:
+ ${color.Yellow}${color.Bold}Options:${color.Color_Off}
  
      ${color.Purple}--case-sensitive ${color.White}${color.Comentary}//matches text in case sensitive mode${color.Color_Off}
  
@@ -62,7 +62,7 @@ module.exports = function helpText() {
  
      ${color.Purple}--include-package-json ${color.White}${color.Comentary}//includes searching in package.json files (name and description text matching, and keywords as tags)${color.Color_Off}
  
- ${color.Yellow}Example:
+ ${color.Yellow}${color.Bold}Example:${color.Color_Off}
  
      ${color.White}${color.Comentary}// create your root folder and sub-folders${color.Color_Off}
  

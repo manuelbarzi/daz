@@ -2,7 +2,7 @@ const Daz = require('./Daz')
 
 const fs = require('fs')
 const path = require('path')
-const helperText = require('./help')
+const help = require('./help')
 
 
 
@@ -16,7 +16,7 @@ class DazCli extends Daz {
             const command = args[2]
 
             if (command === '--help') {
-                this.terminal.log(helperText())
+                this.terminal.log(help())
             } else if (command === '--version') {
                 this.terminal.log(require(path.join(__dirname, '../package.json')).version)
             } else if (command === 'set') {

@@ -2,6 +2,9 @@ const Daz = require('./Daz')
 
 const fs = require('fs')
 const path = require('path')
+const help = require('./help')
+
+
 
 class DazCli extends Daz {
     constructor(input, output, terminal) {
@@ -11,9 +14,9 @@ class DazCli extends Daz {
     _run(args, input, output, terminal) {
         if (args.length >= 3) {
             const command = args[2]
-    
+
             if (command === '--help') {
-                this.output.write(`${fs.readFileSync(path.join(__dirname, 'help.txt'))}\n`)
+                this.terminal.log(help())
             } else if (command === '--version') {
                 this.terminal.log(require(path.join(__dirname, '../package.json')).version)
             } else if (command === 'set') {
@@ -48,14 +51,14 @@ class DazCli extends Daz {
 
     find(args) {
         const what = args[0]
-    
+
         const options = {}
-    
+
         const optionArgs = args.slice(1)
-    
+
         for (let i = 0; i < optionArgs.length; i++) {
             const option = optionArgs[i]
-    
+
             if (option === '--case-sensitive') {
                 options.caseSensitive = true
             } else if (option === '--exclude-description') {
@@ -67,9 +70,9 @@ class DazCli extends Daz {
                 const key = option.substring(0, length)
                 const symbol = option.substring(length, length + 1)
                 const value = option.substring(length + 1)
-    
+
                 if (key !== '--tags' || symbol !== '=' || !_trim(value)) throw new Error('invalid option for --tags')
-    
+
                 options.tags = _split(value)
             } else if (option === '--show-tags') {
                 options.showTags = true
@@ -78,18 +81,18 @@ class DazCli extends Daz {
                 const key = option.substring(0, length)
                 const symbol = option.substring(length, length + 1)
                 const value = option.substring(length + 1)
-    
+
                 if (key !== '--exclude-paths' || symbol !== '=' || !_trim(value)) throw new Error('invalid option for --exclude-paths')
-    
+
                 options.excludePaths = _split(value)
             } else if (option.startsWith('--path=')) {
                 const length = '--path'.length
                 const key = option.substring(0, length)
                 const symbol = option.substring(length, length + 1)
                 const value = option.substring(length + 1)
-    
+
                 if (key !== '--path' || symbol !== '=' || !_trim(value)) throw new Error('invalid option for --path')
-    
+
                 options.path = value
             } else if (option === '--show-full-path') {
                 options.showFullPath = true
@@ -103,7 +106,7 @@ class DazCli extends Daz {
                 options.includePackageJson = true
             }
         }
-    
+
         super.find(what, options)
     }
 }

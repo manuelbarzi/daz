@@ -10,7 +10,7 @@
 // #___________________________________|
 
 module.exports = function helpText() {
-    const color = require("./colors")
+    const color = require("./theme/colors")
     return `
   ${color.Red} 
   ______                   ________      ___

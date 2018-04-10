@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const color = require("./colors")
+const theme = require("./theme")
 
 function set(basePath, input, output, terminal) {
     const _basePath = basePath ? path.resolve(basePath) : process.cwd()
@@ -17,7 +17,7 @@ function set(basePath, input, output, terminal) {
 
     let step = 1
 
-    output.write(`\n${color.Color_Off}${color.Blue}# ${color.Color_Off}${color.Red}title${color.Color_Off} [${color.Yellow}${info.title}${color.Color_Off}] ~$ `)
+    output.write(`\n${theme.set.titleParam("title")} [${theme.set.infoParam(info.title)}] ~$ `)
 
     input.setEncoding('utf8')
 
@@ -28,13 +28,13 @@ function set(basePath, input, output, terminal) {
             case 1:
                 if (text) info.title = text
 
-                output.write(info.description ? `\n${color.Color_Off}${color.Blue}# ${color.Color_Off}${color.Red}description${color.Color_Off} [${color.Yellow}${info.description}${color.Color_Off}] ~$ ` : `\n${color.Color_Off}${color.Red}description${color.Color_Off} ~$ `)
+                output.write(info.description ? `\n${theme.set.titleParam("description")} [${theme.set.infoParam(info.description)}] ~$ ` : `\n${theme.set.requireParam("description")} ~$ `)
 
                 break
             case 2:
                 if (text) info.description = text
 
-                output.write(info.tags ? `\n${color.Color_Off}${color.Blue}# ${color.Color_Off}${color.Red}tags${color.Color_Off}  [${color.Yellow}${info.tags}${color.Color_Off}] (comma or space separated) ~$  ` : `\n${color.Color_Off}${color.Red}tags${color.Color_Off} (comma or space separated) ~$  `)
+                output.write(info.tags ? `\n${theme.set.titleParam("tags")} [${theme.set.infoParam(info.tags)}] (comma or space separated) ~$  ` : `\n${theme.set.requireParam("tags")} (comma or space separated) ~$ `)
 
                 break
             case 3:
@@ -44,12 +44,10 @@ function set(basePath, input, output, terminal) {
         step++
 
         if (step > 3) {
-            let localDate = new Date()
-            //localDate = `${localDate.getFullYear()}-${localDate.getMonth() + 1}-${localDate.getDate()}:${localDate.getHours()}:${localDate.getMinutes()}:${localDate.getSeconds()}`
             if (!info.created)
-                info.created = localDate
+                info.created = new Date()
             else
-                info.modified = localDate
+                info.modified = new Date()
 
             let _info = {}
 
@@ -63,7 +61,7 @@ function set(basePath, input, output, terminal) {
 
             fs.writeFileSync(file, _info)
 
-            terminal.log(`\n${color.Color_Off}${color.Blue}# ${color.Color_Off}${color.Red}written file ${color.Color_Off}${color.Cyan}${file} ${color.Bold}-> ${color.Color_Off}${_info}`)
+            terminal.log(`\n${theme.set.outPutTermianl(file, _info)}`)
 
             process.exit()
         }

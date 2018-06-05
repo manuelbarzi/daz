@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const theme = require("./theme")
 
 function set(basePath, input, output, terminal) {
     const _basePath = basePath ? path.resolve(basePath) : process.cwd()
@@ -10,11 +11,13 @@ function set(basePath, input, output, terminal) {
     const folder = path.basename(_basePath)
     const file = path.join(_basePath, '.this')
 
-    const info = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf-8')) : { title: folder }
+    const info = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf-8')) : {
+        title: folder
+    }
 
     let step = 1
 
-    output.write(`title [${info.title}]: `)
+    output.write(`\n${theme.set.titleParam("title")} [${theme.set.infoParam(info.title)}] ~$ `)
 
     input.setEncoding('utf8')
 
@@ -25,13 +28,13 @@ function set(basePath, input, output, terminal) {
             case 1:
                 if (text) info.title = text
 
-                output.write(info.description ? `description [${info.description}]: ` : 'description: ')
+                output.write(info.description ? `\n${theme.set.titleParam("description")} [${theme.set.infoParam(info.description)}] ~$ ` : `\n${theme.set.requireParam("description")} ~$ `)
 
                 break
             case 2:
                 if (text) info.description = text
 
-                output.write(info.tags ? `tags [${info.tags}] (comma or space separated): ` : 'tags (comma or space separated): ')
+                output.write(info.tags ? `\n${theme.set.titleParam("tags")} [${theme.set.infoParam(info.tags)}] (comma or space separated) ~$  ` : `\n${theme.set.requireParam("tags")} (comma or space separated) ~$ `)
 
                 break
             case 3:
@@ -58,7 +61,7 @@ function set(basePath, input, output, terminal) {
 
             fs.writeFileSync(file, _info)
 
-            terminal.log(`written file ${file} -> ${_info}`)
+            terminal.log(`\n${theme.set.outPutTermianl(file, _info)}`)
 
             process.exit()
         }
